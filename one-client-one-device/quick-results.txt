@@ -1,0 +1,91 @@
+
+|        |   2 |   4 |   7 |
+|--------+-----+-----+-----|
+| core   | 1.6 | 2.2 | 3.2 |
+| python | 1.2 | 3.1 | 6.0 |
+| p+c    | 1.6 | 4.3 | 8.2 |
+
+---
+SelfTest @ 1 workers
+
+real	0m18.383s
+user	0m0.006s
+sys	0m0.005s
+---
+---
+PluginTest @ 1 workers
+
+real	0m38.384s
+user	0m0.008s
+sys	0m0.005s
+---
+---
+PluginTest_do_io_in_core @ 1 workers
+
+real	0m18.386s
+user	0m0.006s
+sys	0m0.008s
+---
+---
+SelfTest @ 2 workers
+
+real	0m29.391s
+user	0m0.006s
+sys	0m0.009s
+---
+---
+PluginTest @ 2 workers
+
+real	0m49.437s
+user	0m0.012s
+sys	0m0.007s
+---
+---
+PluginTest_do_io_in_core @ 2 workers
+
+real	0m28.435s
+user	0m0.005s
+sys	0m0.010s
+---
+---
+SelfTest @ 4 workers
+
+real	0m39.475s
+user	0m0.006s
+sys	0m0.010s
+---
+---
+PluginTest @ 4 workers
+
+real	1m58.483s
+user	0m0.005s
+sys	0m0.011s
+---
+---
+PluginTest_do_io_in_core @ 4 workers
+
+real	1m18.489s
+user	0m0.008s
+sys	0m0.008s
+---
+---
+SelfTest @ 7 workers
+
+real	0m59.610s
+user	0m0.007s
+sys	0m0.010s
+---
+---
+PluginTest @ 7 workers
+
+real	3m47.621s
+user	0m0.007s
+sys	0m0.011s
+---
+---
+PluginTest_do_io_in_core @ 7 workers
+
+real	2m27.632s
+user	0m0.006s
+sys	0m0.013s
+---
