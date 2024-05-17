@@ -1,0 +1,274 @@
+modified   core/src/plugins/filed/python/pyfiles/bareos-fd-local-fileset.py
+@@ -192,10 +192,10 @@ class BareosFdPluginLocalFileset(BareosFdPluginLocalFilesBaseclass):  # noqa
+                 self.file = open(self.FNAME, "rb")
+ 
+             if "do_io_in_core" in self.options:
+-                bareosfd.JobMessage(
+-                    bareosfd.M_INFO,
+-                    "doing io in core as requested by plugin option\n",
+-                )
++                # bareosfd.JobMessage(
++                #     bareosfd.M_INFO,
++                #     "doing io in core as requested by plugin option\n",
++                # )
+                 # do io in core
+                 IOP.filedes = self.file.fileno()
+                 IOP.status = bareosfd.iostat_do_in_core
+modified   systemtests/scripts/functions
+@@ -489,9 +489,9 @@ run_bconsole()
+ 	# 'cmd || ec=$?' is used to prevent "set -e" from killing the script
+ 	# before we had the chance to kill the daemons (in case of timeout)
+ 	if test "$debug" -eq 1 ; then
+-            timeout 100s "${BAREOS_BCONSOLE_BINARY}" -c "${conf}" < "$bconsole_file" || error_code=$?
++            timeout 10000s "${BAREOS_BCONSOLE_BINARY}" -c "${conf}" < "$bconsole_file" || error_code=$?
+ 	else
+-            timeout 100s "${BAREOS_BCONSOLE_BINARY}" -c "${conf}" < "$bconsole_file" 2>&1 >/dev/null || error_code=$?
++            timeout 10000s "${BAREOS_BCONSOLE_BINARY}" -c "${conf}" < "$bconsole_file" 2>&1 >/dev/null || error_code=$?
+ 	fi
+     fi
+     if (( error_code == 124 )); then
+modified   systemtests/tests/py3plug-fd-local-fileset-basic/etc/bareos/bareos-dir.d/client/bareos-fd.conf.in
+@@ -5,3 +5,53 @@ Client {
+   Password = "@fd_password@"          # password for FileDaemon
+   FD PORT = @fd_port@
+ }
++
++Client {
++  Name = bareos-fd1
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd2
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd3
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd4
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd5
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd6
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
++Client {
++  Name = bareos-fd7
++  Description = "Client resource of the Director itself."
++  Address = @hostname@
++  Password = "@fd_password@"          # password for FileDaemon
++  FD PORT = @fd_port@
++}
+\ No newline at end of file
+modified   systemtests/tests/py3plug-fd-local-fileset-basic/etc/bareos/bareos-dir.d/job/backup-bareos-fd.conf
+@@ -3,4 +3,5 @@ Job {
+   JobDefs = "DefaultJob"
+   Client = "bareos-fd"
+   FileSet = "PluginTest"
++  Maximum Concurrent Jobs = 20
+ }
+modified   systemtests/tests/py3plug-fd-local-fileset-basic/etc/bareos/bareos-dir.d/storage/File.conf.in
+@@ -3,6 +3,16 @@ Storage {
+   Address = @hostname@
+   Password = "@sd_password@"
+   Device = FileStorage
++
++  Device = FileStorage1
++  Device = FileStorage2
++  Device = FileStorage3
++  Device = FileStorage4
++  Device = FileStorage5
++  Device = FileStorage6
++  Device = FileStorage7
++
+   Media Type = File
+   SD Port = @sd_port@
++  Maximum Concurrent Jobs = 20
+ }
+modified   systemtests/tests/py3plug-fd-local-fileset-basic/etc/bareos/bareos-sd.d/device/FileStorage.conf
+@@ -1,11 +1,97 @@
+ Device {
+   Name = FileStorage
+   Media Type = File
+-  Archive Device = storage
+-  LabelMedia = yes;                   # lets Bareos label unlabeled media
+-  Random Access = yes;
+-  AutomaticMount = yes;               # when device opened, read it
+-  RemovableMedia = no;
+-  AlwaysOpen = no;
+-  Description = "File device. A connecting Director must have the same Name and MediaType."
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++
++Device {
++  Name = FileStorage1
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage2
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage3
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage4
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage5
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage6
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
++}
++Device {
++  Name = FileStorage7
++  Media Type = File
++  Device Type = Fifo
++  Archive Device = /dev/null
++  LabelMedia = yes
++  Random Access = no
++  AutomaticMount = no
++  RemovableMedia = no
++  MaximumOpenWait = 60
++  AlwaysOpen = no
+ }
+new file   systemtests/tests/py3plug-fd-local-fileset-basic/testrunner-bench.sh
+@@ -0,0 +1,56 @@
++#!/bin/bash
++set -e
++set -o pipefail
++set -u
++#
++# This systemtest tests the plugin functionality
++# of the Bareos FD by using the supplied module
++#   bareos-fd-local-fileset.py
++#
++# The module will backup some files.
++# This plugin is not intended for production,
++# but is only a minimal example that shows
++# how to use the python plugin interface.
++# File attributes like uses and times will not be saved.
++#
++TestName="$(basename "$(pwd)")"
++export TestName
++
++JobName=backup-bareos-fd
++
++#shellcheck source=../environment.in
++. ./environment
++
++#shellcheck source=../scripts/functions
++. "${rscripts}"/functions
++"${rscripts}"/cleanup
++"${rscripts}"/setup
++
++# Fill ${BackupDirectory} with data.
++setup_data
++
++bin/bareos start
++bin/bareos status
++
++start_test
++
++echo "$HOME/test_data/data-1/linux-kernel" > "$tmp/file-list"
++
++for worker_count in 1 2 4 7; do
++    for fileset in "SelfTest" "PluginTest" "PluginTest_do_io_in_core"; do
++        log="$tmp/$fileset-$worker_count"
++        rm -f "$log"
++        echo "@$out $log" > "$tmp/bconcmds"
++        for i in $(seq 1 $worker_count); do
++            echo "run job=backup-bareos-fd level=Full yes client=bareos-fd$i fileset=$fileset" >> "$tmp/bconcmds"
++        done
++        echo "wait" >> "$tmp/bconcmds"
++        echo "messages" >> "$tmp/bconcmds"
++        echo "---"
++        echo "$fileset @ $worker_count workers"
++        time run_bconsole
++        echo "---"
++    done
++done
++
++end_test
