@@ -1,0 +1,62 @@
+run job=backup-bareos-fd level=Full yes client=bareos-fd1 fileset=PluginTest_do_io_in_core
+Using Catalog "MyCatalog"
+Job queued. JobId=3
+wait
+You have messages.
+messages
+17-May 13:20 bareos-dir JobId 3: Version: 24.0.0~pre551.1898be0e46.dirty (17 May 2024) Fedora 39
+17-May 13:20 bareos-dir JobId 3: Start Backup JobId 3, Job=backup-bareos-fd.2024-05-17_13.20.20_08
+17-May 13:20 bareos-dir JobId 3: Connected Storage daemon at localhost:30393, encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 bareos-dir JobId 3:  Encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 bareos-dir JobId 3: Connected Client: bareos-fd1 at localhost:30400, encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 bareos-dir JobId 3:  Handshake: Immediate TLS 
+17-May 13:20 bareos-dir JobId 3:  Encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 bareos-dir JobId 3: Using Device "FileStorage" to write.
+17-May 13:20 py3plug-fd-local-fileset-basic-fd JobId 3: Connected Storage daemon at localhost:30393, encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 py3plug-fd-local-fileset-basic-fd JobId 3:  Encryption: TLS_CHACHA20_POLY1305_SHA256 TLSv1.3
+17-May 13:20 py3plug-fd-local-fileset-basic-fd JobId 3: Extended attribute support is enabled
+17-May 13:20 py3plug-fd-local-fileset-basic-fd JobId 3: ACL support is enabled
+17-May 13:20 bareos-sd JobId 3: Version: 24.0.0~pre551.1898be0e46.dirty (17 May 2024) Fedora 39
+17-May 13:20 bareos-sd JobId 3: Wrote label to prelabeled Volume "Full-0001" on device "FileStorage" (/dev/null)
+17-May 13:20 py3plug-fd-local-fileset-basic-fd JobId 3: Version: 24.0.0~pre551.1898be0e46.dirty (17 May 2024) Fedora 39
+17-May 13:20 bareos-sd JobId 3: Releasing device "FileStorage" (/dev/null).
+17-May 13:20 bareos-sd JobId 3: Elapsed time=00:00:17, Transfer rate=258.0 M Bytes/second
+17-May 13:20 bareos-dir JobId 3: Insert of attributes batch table with 84812 entries start
+17-May 13:20 bareos-dir JobId 3: Insert of attributes batch table done
+17-May 13:20 bareos-dir JobId 3: Bareos bareos-dir 24.0.0~pre551.1898be0e46.dirty (17May24):
+  Build OS:               Fedora 39
+  JobId:                  3
+  Job:                    backup-bareos-fd.2024-05-17_13.20.20_08
+  Backup Level:           Full
+  Client:                 "bareos-fd1" 24.0.0~pre551.1898be0e46.dirty (17May24) Fedora 39,redhat
+  FileSet:                "PluginTest_do_io_in_core" 2024-05-17 13:20:20
+  Pool:                   "Full" (From Job FullPool override)
+  Catalog:                "MyCatalog" (From Client resource)
+  Storage:                "File" (From Job resource)
+  Scheduled time:         17-May-2024 13:20:20
+  Start time:             17-May-2024 13:20:22
+  End time:               17-May-2024 13:20:39
+  Elapsed time:           17 secs
+  Priority:               10
+  Allow Mixed Priority:   no
+  FD Files Written:       84,812
+  SD Files Written:       84,812
+  FD Bytes Written:       4,348,225,472 (4.348 GB)
+  SD Bytes Written:       4,386,136,998 (4.386 GB)
+  Rate:                   255778.0 KB/s
+  Software Compression:   None
+  VSS:                    no
+  Encryption:             no
+  Accurate:               no
+  Volume name(s):         Full-0001
+  Volume Session Id:      3
+  Volume Session Time:    1715944754
+  Last Volume Bytes:      4,390,453,712 (4.390 GB)
+  Non-fatal FD errors:    0
+  SD Errors:              0
+  FD termination status:  OK
+  SD termination status:  OK
+  Bareos binary info:     Self-compiled: Get professional support from https://www.bareos.com
+  Job triggered by:       User
+  Termination:            Backup OK
+
